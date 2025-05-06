@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Layers, Building, AlertTriangle, Trash2, Restroom, School, Briefcase, MapPin, ZoomIn, ZoomOut } from "lucide-react";
+import { Layers, Building, AlertTriangle, Trash2, Bath, School, Briefcase, MapPin, ZoomIn, ZoomOut } from "lucide-react";
 import Image from "next/image";
 
 export default function HartaInteractivaPage() {
@@ -9,7 +9,7 @@ export default function HartaInteractivaPage() {
     { name: "Clădiri Principale", icon: MapPin, color: "text-purple-500" },
     { name: "Alerte", icon: AlertTriangle, color: "text-red-500" },
     { name: "Puncte Colectare", icon: Trash2, color: "text-green-500" },
-    { name: "Toalete Publice", icon: Restroom, color: "text-yellow-500" },
+    { name: "Toalete Publice", icon: Bath, color: "text-yellow-500" },
     { name: "Educație", icon: School, color: "text-indigo-500" },
     { name: "Servicii", icon: Briefcase, color: "text-pink-500" },
   ];
