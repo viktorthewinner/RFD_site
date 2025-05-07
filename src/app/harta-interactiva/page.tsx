@@ -3,6 +3,7 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { MAP_KEY } from '@/lib/utils';
 import { Layers, Building, AlertTriangle, Trash2, Bath, School, Briefcase, MapPin, ZoomIn, ZoomOut } from "lucide-react";
 import { GoogleMap, useJsApiLoader, MarkerF } from '@react-google-maps/api';
 import { useCallback, useRef } from 'react';
@@ -82,7 +83,7 @@ export default function HartaInteractivaPage() {
   };
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '',
+    googleMapsApiKey: MAP_KEY,
     libraries: ['marker'],
     version: 'weekly', // You might need a specific version if encountering issues
   });
