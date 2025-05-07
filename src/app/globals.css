@@ -10,7 +10,7 @@
     --card-foreground: 240 10% 3.9%;
     --popover: 120 60% 95%;
     --popover-foreground: 240 10% 3.9%;
-    --primary: 122 39% 49%; /* Green */
+    --primary: 150 52% 57%; /* New Green #57CC99 */
     --primary-foreground: 0 0% 100%;
     --secondary: 220 13% 91%; /* Lighter gray for secondary elements */
     --secondary-foreground: 240 10% 3.9%;
@@ -32,7 +32,7 @@
 
     --sidebar-background: 220 14% 96%;
     --sidebar-foreground: 220 10% 25%;
-    --sidebar-primary: 122 39% 49%;
+    --sidebar-primary: 150 52% 57%; /* New Green #57CC99 */
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 217 91% 60%;
     --sidebar-accent-foreground: 0 0% 100%;
@@ -47,7 +47,7 @@
     --card-foreground: 0 0% 98%;
     --popover: 240 10% 3.9%;
     --popover-foreground: 0 0% 98%;
-    --primary: 122 39% 49%; /* Green */
+    --primary: 150 52% 57%; /* New Green #57CC99 */
     --primary-foreground: 0 0% 100%;
     --secondary: 240 4% 15%; /* Darker gray for secondary elements */
     --secondary-foreground: 0 0% 98%;
@@ -68,7 +68,7 @@
 
     --sidebar-background: 240 4% 10%;
     --sidebar-foreground: 0 0% 95%;
-    --sidebar-primary: 122 39% 49%;
+    --sidebar-primary: 150 52% 57%; /* New Green #57CC99 */
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 217 91% 60%;
     --sidebar-accent-foreground: 0 0% 100%;

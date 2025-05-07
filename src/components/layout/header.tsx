@@ -1,10 +1,11 @@
+'use client'
 import Link from 'next/link';
-import Image from 'next/image';
+// import Image from 'next/image';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { Globe, LogIn, Menu, Search, UserPlus } from 'lucide-react';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { Globe, LogIn, Menu, UserPlus } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 const navLinks = [
@@ -12,97 +13,160 @@ const navLinks = [
   { href: '/resurse', label: 'Resurse' },
   { href: '/cetateni', label: 'Cetățeni' },
 ];
+const translations: { [key: string]: { [key: string]: string } } = {
+  ro: {
+    'Info Cartier': 'Info Cartier',
+    'Resurse': 'Resurse',
+    'Cetățeni': 'Cetățeni',
+    'Autentificare': 'Autentificare',
+    'Înregistrare': 'Înregistrare',
+  },
+  en: {
+    'Info Cartier': 'Neighborhood Info',
+    'Resurse': 'Resources',
+    'Cetățeni': 'Citizens',
+    'Autentificare': 'Login',
+    'Înregistrare': 'Register'
+  },
+};
 
-const NavLinkItem = ({ href, label }: { href: string; label: string }) => (
+const LanguageSwitcher = () => {
+  const [language, setLanguage] = useState('ro');
+
+  useEffect(() => {
+    const savedLanguage = localStorage.getItem('language') || 'ro';
+    setLanguage(savedLanguage);
+  }, []);
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" size="icon" className="h-9 w-9">
+          <Globe className="h-5 w-5" />
+          <span className="sr-only">Change language</span>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuItem onClick={() => localStorage.setItem('language', 'ro')}>Română</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => localStorage.setItem('language', 'en')}>English</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+
+const NavLinkItem = ({ href, label }: { href: string; label: string }) => {
+  return (
   <Button variant="ghost" asChild className="text-sm font-medium text-foreground/80 hover:text-foreground">
     <Link href={href}>{label}</Link>
   </Button>
-);
+  );
+}
 
 export default function Header() {
+  const [language, setLanguage] = useState<string>('ro');
+  useEffect(() => {
+    const savedLanguage = localStorage.getItem('language') || 'ro';
+    setLanguage(savedLanguage);
+    const handleStorageChange = () => {
+      setLanguage(localStorage.getItem('language') || 'ro');
+    };
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
+
+  const translateText = (key: string) => {
+    return translations[language]?.[key] || key;
+  };
+
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <>
+    <div className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <Link href="/" className="flex items-center gap-2">
-          <Image src="https://picsum.photos/seed/logo/40/40" alt="Sector 1 Logo" width={32} height={32} className="rounded-sm" data-ai-hint="city logo" />
-          <span className="font-semibold text-lg">Cartierul Meu</span>
+          {/* <Image src="https://picsum.photos/seed/logo/40/40" alt="Sector 1 Logo" width={32} height={32} className="rounded-sm" data-ai-hint="city logo" /> */}
+          <span className="font-semibold text-lg">{translateText('Cartierul Meu')}</span> {/* Add translation here */} {/* Add logo placeholder or uncomment Image */}
         </Link>
 
-        <nav className="hidden md:flex items-center space-x-2 lg:space-x-4">
-          {navLinks.map((link) => (
-            <NavLinkItem key={link.href} {...link} />
-          ))}
-        </nav>
-
-        <div className="flex items-center gap-2 md:gap-4">
-          <div className="relative hidden sm:block">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input type="search" placeholder="Caută..." className="pl-8 sm:w-[200px] lg:w-[300px] rounded-full h-9" />
+        <nav className="hidden md:flex items-center gap-4">
+          <div className="w-64"> {/* Adjusted width for the search bar */}
+            <Input
+              type="text"
+              placeholder={translateText('Search...')} // Add translation here
+              className="w-full"
+            />
           </div>
+          {navLinks.map((link) => (
+            <NavLinkItem key={link.href} href={link.href} label={translateText(link.label)} />
+          ))}
 
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="h-9 w-9">
-                <Globe className="h-5 w-5" />
-                <span className="sr-only">Schimbă limba</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem>Română</DropdownMenuItem>
-              <DropdownMenuItem>English</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-
-          <div className="hidden md:flex items-center gap-2">
+          {/* Login and Register Buttons */}
+          <div className="flex items-center gap-2">
             <Button variant="outline" size="sm" asChild>
               <Link href="/autentificare">
-                <LogIn className="mr-2 h-4 w-4" /> Autentificare
+                <LogIn className="mr-2 h-4 w-4" /> {translateText('Autentificare')}{' '}
               </Link>
-            </Button>
+            </Button>{' '}
             <Button variant="default" size="sm" asChild>
-              <Link href="/inregistrare">
-                <UserPlus className="mr-2 h-4 w-4" /> Înregistrare
+              <Link href="/inregistrare">{/* Translate text */}
+                <UserPlus className="mr-2 h-4 w-4" /> {translateText('Înregistrare')}
               </Link>
-            </Button>
+            </Button>{' '}
+
+            <LanguageSwitcher />
           </div>
-          
-          {/* Mobile Menu */}
+        </nav>
+{/* mobile navigation */}
+        <div className="md:hidden flex items-center">
+          <div className="w-40 mr-2"> {/* Adjusted width for the mobile search bar */}
+            <Input
+              type="text"
+              placeholder={translateText('Search...')} // Add translation here
+              className="w-full"
+            />
+          </div>
+          <DropdownMenu>
+           <DropdownMenuTrigger asChild>
+             <Button variant="ghost" size="icon" className="h-9 w-9">
+               <Globe className="h-5 w-5" />
+               <span className="sr-only">{translateText('Schimbă limba')}</span>{' '}
+             </Button>
+           </DropdownMenuTrigger>
+           <DropdownMenuContent align="end">
+             <DropdownMenuItem onClick={() => localStorage.setItem('language', 'ro')}>{translateText('Română')}</DropdownMenuItem>
+             <DropdownMenuItem onClick={() => localStorage.setItem('language', 'en')}>{translateText('English')}</DropdownMenuItem>
+           </DropdownMenuContent>
+          </DropdownMenu>
           <Sheet>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="md:hidden h-9 w-9">
                 <Menu className="h-5 w-5" />
-                <span className="sr-only">Deschide meniul</span>
+                <span className="sr-only">{translateText('Deschide meniul')}</span>{' '}
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-[300px] sm:w-[400px]">
               <nav className="flex flex-col gap-4 mt-8">
-                {navLinks.map((link) => (
-                  <Button variant="ghost" asChild className="justify-start text-base" key={link.href}>
-                     <Link href={link.href}>{link.label}</Link>
-                  </Button>
+                {navLinks.map((link, index) => (
+                  <NavLinkItem key={index} href={link.href} label={translateText(link.label)} />
                 ))}
-                <div className="relative mt-4">
-                  <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                  <Input type="search" placeholder="Caută..." className="pl-8 w-full rounded-full h-9" />
-                </div>
                 <div className="mt-auto flex flex-col gap-2 pt-6">
-                   <Button variant="outline" asChild>
+                  <Button variant="outline" asChild>
                     <Link href="/autentificare">
-                      <LogIn className="mr-2 h-4 w-4" /> Autentificare
+                      <LogIn className="mr-2 h-4 w-4" /> {translateText('Autentificare')}
                     </Link>
                   </Button>
                   <Button variant="default" asChild>
-                    <Link href="/inregistrare">
-                      <UserPlus className="mr-2 h-4 w-4" /> Înregistrare
-                    </Link>
-                  </Button>
-                </div>
-              </nav>
-            </SheetContent>
-          </Sheet>
 
-        </div>
-      </div>
-    </header>
+                    <Link href="/inregistrare">
+                      <UserPlus className="mr-2 h-4 w-4" /> {translateText('Înregistrare')}{' '}
+                    </Link>
+                  </Button>{' '}
+                </div>{' '}
+              </nav>
+            </SheetContent>{' '}
+          </Sheet>{' '}
+        </div>{' '}
+      </div>{' '}
+    </div>
+    </>
   );
 }
