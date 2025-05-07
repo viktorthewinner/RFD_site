@@ -3,16 +3,17 @@ import Link from 'next/link';
 // import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { Input } from '@/components/ui/input';import { DropdownMenuSeparator } from "@/components/ui/dropdown-menu"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Globe, LogIn, Menu, UserPlus } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 const navLinks = [
-  { href: '/info-cartier', label: 'Info Cartier' },
-  { href: '/resurse', label: 'Resurse' },
-  { href: '/cetateni', label: 'Cetățeni' },
+ { label: 'Info Cartier', subcategories: [ { href: '/info-cartier/noutati', label: 'Noutăți' }, { href: '/info-cartier/alerte', label: 'Alerte' }, { href: '/info-cartier/evenimente', label: 'Evenimente' }, { href: '/info-cartier/proiecte-campanii', label: 'Proiecte/Campanii' } ] },
+  { label: 'Resurse', subcategories: [ { href: '/resurse/regulamente', label: 'Regulamente' }, { href: '/resurse/ghid', label: 'Ghid Servicii Locale' }, { href: '/resurse/formulare', label: 'Formulare' } ] },
+  { label: 'Cetățeni', subcategories: [ { href: '/cetateni/sesizari', label: 'Sesizări' }, { href: '/cetateni/programari', label: 'Programări' }, { href: '/cetateni/consultari', label: 'Consultări Publice' }, { href: '/cetateni/voluntariat', label: 'Voluntariat' }, { href: '/cetateni/anunturi', label: 'Panou Anunțuri' } ] },
 ];
+
 const translations: { [key: string]: { [key: string]: string } } = {
   ro: {
     'Info Cartier': 'Info Cartier',
@@ -55,10 +56,8 @@ const LanguageSwitcher = () => {
 }
 
 const NavLinkItem = ({ href, label }: { href: string; label: string }) => {
-  return (
-  <Button variant="ghost" asChild className="text-sm font-medium text-foreground/80 hover:text-foreground">
-    <Link href={href}>{label}</Link>
-  </Button>
+  return ( 
+    <Link href={href} className="text-sm font-medium text-foreground/80 hover:text-foreground">{label}</Link>
   );
 }
 
@@ -84,7 +83,7 @@ export default function Header() {
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <Link href="/" className="flex items-center gap-2">
           {/* <Image src="https://picsum.photos/seed/logo/40/40" alt="Sector 1 Logo" width={32} height={32} className="rounded-sm" data-ai-hint="city logo" /> */}
-          <span className="font-semibold text-lg">{translateText('Cartierul Meu')}</span> {/* Add translation here */} {/* Add logo placeholder or uncomment Image */}
+          <img src="/images.png" alt="Sector 1 Logo" width={64} height={64} className="rounded-sm" data-ai-hint="city logo" /> <span className="font-semibold text-lg">Cartierul Universitate</span> {/* Add translation here */} {/* Add logo placeholder or uncomment Image */}
         </Link>
 
         <nav className="hidden md:flex items-center gap-4">
@@ -95,9 +94,23 @@ export default function Header() {
               className="w-full"
             />
           </div>
-          {navLinks.map((link) => (
-            <NavLinkItem key={link.href} href={link.href} label={translateText(link.label)} />
-          ))}
+          {navLinks.map((link) => {
+            if (link.subcategories) {
+              return (
+                <DropdownMenu key={link.label}>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="text-sm font-medium text-foreground/80 hover:text-foreground">
+                      {translateText(link.label)}
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="start">
+                    {link.subcategories.map((sublink) => (
+                      <DropdownMenuItem key={sublink.href}><Link href={sublink.href}>{translateText(sublink.label)}</Link></DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              );
+            } else {return (<NavLinkItem key={link.label} href={link.href || '#'} label={translateText(link.label)} />)}})}
 
           {/* Login and Register Buttons */}
           <div className="flex items-center gap-2">

@@ -44,6 +44,10 @@ const projectItems = [
 export default function ProiecteCampaniiPage() {
   return (
     <div className="container mx-auto px-4 py-8">
+      <p className="text-xl text-muted-foreground mb-6 text-center">
+        Pe această pagină veți găsi detalii despre proiectele și campaniile care se desfășoară în Cartierul Universitate.
+      </p>
+
       <div className="flex items-center justify-between mb-8">
         <h1 className="text-3xl font-bold text-primary flex items-center gap-2">
           <Megaphone className="w-8 h-8" /> Proiecte și Campanii

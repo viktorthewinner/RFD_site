@@ -34,13 +34,16 @@ const newsItems = [
 export default function NoutatiPage() {
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="flex items-center justify-between mb-8">
-        <h1 className="text-3xl font-bold text-primary flex items-center gap-2">
-          <Newspaper className="w-8 h-8" /> Noutăți din Cartier
+      <div className="mb-8">
+        <h1 className="text-4xl font-bold text-primary text-center mb-4">
+          Noutăți
         </h1>
-        <Button variant="outline" asChild>
-          <Link href="/info-cartier">Înapoi la Info Cartier</Link>
-        </Button>
+ <p className="text-xl text-muted-foreground text-center">
+        Pe această pagină veți găsi cele mai recente noutăți și anunțuri despre Cartierul Universitate.
+ </p>
+      </div>
+
+      <div className="flex justify-center mb-8">
       </div>
       
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">

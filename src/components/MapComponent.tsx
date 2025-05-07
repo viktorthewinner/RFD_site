@@ -7,7 +7,7 @@ import { MAP_KEY } from '@/lib/utils';
 import { Layers, Building, AlertTriangle, Trash2, Bath, School, Briefcase, MapPin, ZoomIn, ZoomOut } from "lucide-react";
 import { GoogleMap, useJsApiLoader, MarkerF } from '@react-google-maps/api';
 import { useCallback, useRef } from 'react';
-export default function HartaInteractivaPage() {
+export function MapComponent() {
   const layers = [
     { name: "Instituții", icon: Building, color: "text-blue-500" },
     { name: "Alerte", icon: AlertTriangle, color: "text-red-500" }, // Keeping this layer as an example
@@ -56,10 +56,10 @@ export default function HartaInteractivaPage() {
     return (
       <>
         {visibleLayers.includes("Instituții") && institutions.map((institution, index) => ( // Removed google.maps.marker.AdvancedMarkerElement
- <MarkerF key={`institution-${index}`} position={{ lat: institution.lat, lng: institution.lng }} title={institution.name} />
+          <MarkerF key={`institution-${index}`} position={{ lat: institution.lat, lng: institution.lng }} title={institution.name} />
         ))}
         {visibleLayers.includes("Educație") && educationInstitutions.map((institution, index) => ( // Removed google.maps.marker.AdvancedMarkerElement
- <MarkerF key={`education-${index}`} position={{ lat: institution.lat, lng: institution.lng }} title={institution.name} />
+          <MarkerF key={`education-${index}`} position={{ lat: institution.lat, lng: institution.lng }} title={institution.name} />
         ))}
       </>
     );
@@ -99,7 +99,7 @@ export default function HartaInteractivaPage() {
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-2 text-center text-primary">Hartă Interactivă a Cartierului</h1>
       <p className="text-center text-muted-foreground mb-8">Explorează în detaliu punctele de interes, alertele și serviciile din zona ta.</p>
-      
+
       <div className="lg:flex lg:gap-6">
         <Card className="lg:w-1/4 mb-6 lg:mb-0 shadow-lg">
           <CardHeader>
@@ -127,7 +127,7 @@ export default function HartaInteractivaPage() {
         <Card className="lg:flex-grow shadow-lg">
           <CardHeader>
             <CardTitle>Vizualizare Hartă</CardTitle>
-             <div className="flex justify-end space-x-2">
+            <div className="flex justify-end space-x-2">
               <Button variant="outline" size="icon" aria-label="Zoom In" onClick={handleZoomIn}>
                 <ZoomIn className="w-5 h-5" />
               </Button>

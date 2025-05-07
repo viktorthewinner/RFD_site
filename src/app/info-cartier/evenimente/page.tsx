@@ -43,9 +43,13 @@ const eventItems = [
 export default function EvenimentePage() {
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="flex items-center justify-between mb-8">
+      <h1 className="text-3xl font-bold mb-4 text-center text-primary">Evenimente</h1>
+ <p className="text-center text-muted-foreground mb-8">
+        Pe această pagină veți găsi informații despre evenimentele care au loc în Cartierul Universitate.
+      </p>
+      <div className="flex items-center justify-between mb-8"> {/* Adjusted margin-bottom */}
         <h1 className="text-3xl font-bold text-primary flex items-center gap-2">
-          <CalendarDays className="w-8 h-8" /> Evenimente în Cartier
+          <CalendarDays className="w-8 h-8" /> {/* Removed duplicate title */}
         </h1>
         <Button variant="outline" asChild>
           <Link href="/info-cartier">Înapoi la Info Cartier</Link>

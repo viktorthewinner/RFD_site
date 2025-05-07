@@ -50,11 +50,12 @@ export default function PersistentButtons() {
       timestamp: new Date(),
     };
 
-    // Simulate assistant response
     const assistantResponse: ChatMessage = {
       id: `assistant-${Date.now()}`,
       sender: 'assistant',
-      text: `Am primit mesajul tău: "${userInput}". Momentan sunt un asistent simplu, dar în viitor voi putea oferi răspunsuri mai detaliate.`,
+ text: userInput.toLowerCase().includes('zgomot')
+ ? 'Salut! Orele de liniște în timpul săptămânii sunt între 22:00-08:00 și 13:00-14:00. Găsești mai multe detalii și regulamentul complet în secțiunea Resurse -> Regulamente Locale'
+ : `Am primit mesajul tău: "${userInput}". Momentan sunt un asistent simplu, dar în viitor voi putea oferi răspunsuri mai detaliate.`,
       timestamp: new Date(),
     };
 
@@ -107,9 +108,8 @@ export default function PersistentButtons() {
         <SheetContent className="flex flex-col p-0">
           <SheetHeader className="p-6 pb-2 border-b">
             <SheetTitle className="flex items-center gap-2">
-              <Avatar className="h-8 w-8">
-                <AvatarImage src="https://picsum.photos/seed/assistant/40/40" alt="Vecinul Digital" data-ai-hint="robot avatar"/>
-                <AvatarFallback>VD</AvatarFallback>
+              <Avatar className="h-12 w-12">
+                <AvatarImage src="/avatar.png"/>
               </Avatar>
               Vecinul Digital
             </SheetTitle>

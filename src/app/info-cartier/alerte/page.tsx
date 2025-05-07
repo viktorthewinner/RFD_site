@@ -43,9 +43,12 @@ const alertItems = [
 export default function AlertePage() {
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="flex items-center justify-between mb-8">
+      <h1 className="text-3xl font-bold text-primary text-center mb-4">Alerte</h1>
+      <p className="text-center text-lg text-muted-foreground mb-8">Pe această pagină veți găsi alerte și informații despre utilități, trafic și lucrări în Cartierul Universitate.</p>
+      
+      <div className="flex items-center justify-between mb-8"> {/* This div might need adjustment based on desired layout */}
         <h1 className="text-3xl font-bold text-primary flex items-center gap-2">
-          <AlertTriangle className="w-8 h-8" /> Alerte în Cartier
+          <AlertTriangle className="w-8 h-8" /> Alerte
         </h1>
         <Button variant="outline" asChild>
           <Link href="/info-cartier">Înapoi la Info Cartier</Link>
