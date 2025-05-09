@@ -5,4 +5,4 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export const MAP_KEY = "AIzaSyAF28eqS0I6mIG5WBgVDweelsLD22uZobI";
+export const MAP_KEY = "another api key";
